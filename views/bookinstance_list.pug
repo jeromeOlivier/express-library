@@ -1,0 +1,30 @@
+extends layout
+
+block content
+    h1= title
+
+    table(class='table table-striped')
+        thead
+            th title
+            th status
+            th due date
+        each instance in bookinstance_list
+            tr
+                td
+                    a(href=instance.url) #{instance.book.title} : #{instance.imprint}
+                td
+                    if instance.status=== 'Available'
+                        span.text-success #{instance.status}
+                    else if instance.status=== 'Maintenance'
+                        span.text-danger #{instance.status}
+                    else
+                        span.text-warning #{instance.status}
+                if instance.status!='Available'
+                    td
+                        span (Due: #{instance.due_back_formatted})
+                else
+                    td
+        else
+            tr(span="col=2") There are no books in this database.
+
+    // Path: views/bookinstance_list.pug
